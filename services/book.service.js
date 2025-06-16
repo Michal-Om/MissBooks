@@ -50,28 +50,34 @@ function getDefaultFilter() {
 function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
-        books = [
-            _createBook('Gwent', 300, 0),
-            _createBook('Between Here and Gone', 120, 1),
-            _createBook('Magic Lantern', 50, 2),
-            _createBook('It\'s\ Just a Dog', 150, 3)
-        ]
+        const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+        books = []
+        for (let i = 0; i < 20; i++) {
+            const book = {
+                id: utilService.makeId(),
+                title: utilService.makeLorem(2),
+                subtitle: utilService.makeLorem(4),
+                authors: [
+                    utilService.makeLorem(1)
+                ],
+                publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+                description: utilService.makeLorem(20),
+                pageCount: utilService.getRandomIntInclusive(20, 600),
+                categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+                thumbnail: `./img/${i + 1}.jpg`,
+                language: "en",
+                listPrice: {
+                    amount: utilService.getRandomIntInclusive(80, 500),
+                    currencyCode: "EUR",
+                    isOnSale: Math.random() > 0.7
+                }
+            }
+            books.push(book)
+        }
         saveToStorage(BOOK_KEY, books)
+        console.log('books', books)
     }
+
 }
 
 
-function _createBook(title, amount, i) {
-    return {
-        id: makeId(),
-        title,
-        description: makeLorem(20),
-        // thumbnail: `http://ca.org/books-photos/${i + 1}.jpg`,
-        thumbnail:   `./img/${i + 1}.jpg`,
-        listPrice: {
-            amount,
-            currencyCode: 'EUR',
-            isOnSale: false,
-        },
-    }
-}
