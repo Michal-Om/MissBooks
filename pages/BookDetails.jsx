@@ -23,17 +23,17 @@ export function BookDetails({ bookId, onBack }) {
     // if book data is still null (before the promise from loadBook() resolves), 
     // we show a simple message 
     //we first check if (!book) to avoid destructuring null or undefined.
-    const { title, price, imgNum } = book
+    const { title, listPrice, thumbnail } = book
 
     return (
         <section className="book-details container">
             <h1>Book Title: {title}</h1>
-            <h1>Price: {price}</h1>
+            <h1>Price: {listPrice.amount}</h1>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Dolorum aliquam quibusdam corrupti? Minus, ad tenetur!
             </p>
-            <img src={`/img/${imgNum}.jpg`} alt="Book Image" />
+            <img src={thumbnail} alt="Book Image" />
             <button onClick={onBack}>Back</button>
         </section>
     )

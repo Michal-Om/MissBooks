@@ -1,6 +1,7 @@
 const { useState, useEffect } = React
 
 export function BookFilter({ defaultFilter, onSetFilter }) {
+console.log('filter:', defaultFilter);
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...defaultFilter })
 
@@ -45,7 +46,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 <label htmlFor="txt">Book Title</label>
                 <input onChange={handleChange} value={txt} name="txt" id="txt" type="text" />
 
-                <label htmlFor="price">Price</label>
+                <label htmlFor="price">Max Price</label>
                 <input onChange={handleChange} value={price || ''} name="price" id="price" type="number" />
             </form>
         </section>

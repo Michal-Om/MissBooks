@@ -1,4 +1,4 @@
-import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
+import { loadFromStorage, makeId, makeLorem, saveToStorage } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
@@ -9,7 +9,6 @@ export const bookService = {
     get,
     remove,
     save,
-    getEmptyBook,
     getDefaultFilter
 }
 
@@ -21,7 +20,7 @@ function query(filterBy = {}) {
                 books = books.filter(book => regExp.test(book.title))
             }
             if (filterBy.price) {
-                books = books.filter(book => book.price >= filterBy.price)
+                books = books.filter(book => book.listPrice.amount <= filterBy.price)
             }
             return books
         })
@@ -44,10 +43,6 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', price = '', imgNum = null) {
-    return { title, price, imgNum }
-}
-
 function getDefaultFilter() {
     return { txt: '', price: '' }
 }
@@ -56,30 +51,27 @@ function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
         books = [
-            _createBook('Gwent', 300, 1),
-            _createBook('Between Here and Gone', 120, 2),
-            _createBook('Magic Lantern', 50, 3),
-            _createBook('It\'s\ Just a Dog', 150, 4)
+            _createBook('Gwent', 300, 0),
+            _createBook('Between Here and Gone', 120, 1),
+            _createBook('Magic Lantern', 50, 2),
+            _createBook('It\'s\ Just a Dog', 150, 3)
         ]
         saveToStorage(BOOK_KEY, books)
     }
 }
 
-function _createBook(title, price = 250, imgNum) {
-    const book = getEmptyBook(title, price)
-    book.id = makeId()
-    book.imgNum = imgNum
-    return book
-}
 
-// {
-// "id": "OXeMG8wNskc",
-// "title": "metus hendrerit",
-// "description": "placerat nisi sodales suscipit tellus",
-// "thumbnail": "http://ca.org/books-photos/20.jpg",
-// "listPrice": {
-// "amount": 109,
-// "currencyCode": "EUR",
-// "isOnSale": false
-// }
-// }
+function _createBook(title, amount, i) {
+    return {
+        id: makeId(),
+        title,
+        description: makeLorem(20),
+        // thumbnail: `http://ca.org/books-photos/${i + 1}.jpg`,
+        thumbnail:   `./img/${i + 1}.jpg`,
+        listPrice: {
+            amount,
+            currencyCode: 'EUR',
+            isOnSale: false,
+        },
+    }
+}

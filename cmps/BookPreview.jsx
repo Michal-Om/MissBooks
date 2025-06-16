@@ -1,12 +1,11 @@
 export function BookPreview({ book }) {
 
-    const { title, price, imgNum } = book
-    // console.log('imgNum:', imgNum)
+    const { title, listPrice, thumbnail } = book
     return (
         <article className="book-preview">
-            <h2>Title: {title}</h2>
-            <h4>Price: {price}</h4>
-            <img src={`./img/${imgNum}.jpg`} alt="Book Image" />
+            <h2>{title}</h2>
+            <h4>Price: {listPrice.amount}</h4>
+            <img src={thumbnail} alt="Book Image" />
         </article>
     )
 }
