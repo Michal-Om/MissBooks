@@ -20,6 +20,12 @@ export function BookDetails({ bookId, onBack }) {
             })
     }
 
+    function getPageCountDesc(pageCount){
+        if (pageCount > 500) return `Serious Reading (${pageCount})`
+        if (pageCount > 200) return `Descent Reading (${pageCount})` 
+        if (pageCount < 100) return `Light Reading (${pageCount})`
+    }
+
     if (!book) return <div>Loading...</div>
     // if book data is still null (before the promise from loadBook() resolves), 
     // we show a simple message 
@@ -39,7 +45,7 @@ export function BookDetails({ bookId, onBack }) {
                 </ul>
             </section>
            <p>Published: {book.publishedDate}</p>
-           <p>Page Count: {book.pageCount}</p>
+           <p>Page Count: {getPageCountDesc(book.pageCount)}</p>
            <p>Price: {book.listPrice.amount}</p>
             <button onClick={onBack}>Back</button>
         </section>
