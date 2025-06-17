@@ -1,5 +1,6 @@
 import { BookPreview } from "../cmps/BookPreview.jsx"
 import { bookService } from "../services/book.service.js"
+import { LongText } from "../cmps/LongText.jsx"
 
 const { useState, useEffect } = React
 
@@ -41,15 +42,18 @@ export function BookDetails({ bookId, onBack }) {
     // if book data is still null (before the promise from loadBook() resolves), 
     // we show a simple message 
     //we first check if (!book) to avoid destructuring null or undefined.
-    const { title, listPrice, thumbnail } = book
+
+    // const { title, listPrice, thumbnail } = book
+    //here we will not destructure but use book. for each prop for better orientation
 
     return (
         <section className="book-details container">
-            <pre>{JSON.stringify(book, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(book, null, 2)}</pre> */}
             {book.listPrice.isOnSale && <span>On Sale</span>}
             <BookPreview book={book} />
-
-            <p>{book.description}</p>
+            <LongText txt={book.description}/>
+            
+            {/* <p>{book.description}</p> */}
             <section>
                 <h4>Authors</h4>
                 <ul>{book.authors.map(author => <li key={author}>{author}</li>)}
