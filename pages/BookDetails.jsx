@@ -1,3 +1,4 @@
+import { BookPreview } from "../cmps/BookPreview.jsx"
 import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
@@ -27,13 +28,19 @@ export function BookDetails({ bookId, onBack }) {
 
     return (
         <section className="book-details container">
-            <h1>Book Title: {title}</h1>
-            <h1>Price: {listPrice.amount}</h1>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dolorum aliquam quibusdam corrupti? Minus, ad tenetur!
-            </p>
-            <img src={thumbnail} alt="Book Image" />
+            <pre>{JSON.stringify(book, null, 2)}</pre>
+            {book.listPrice.isOnSale && <span>On Sale</span>}
+            <BookPreview book={book}/>
+
+            <p>{book.description}</p>
+            <section>
+                <h4>Authors</h4>
+                <ul>{book.authors.map(author => <li key={author}>{author}</li>)}
+                </ul>
+            </section>
+           <p>Published: {book.publishedDate}</p>
+           <p>Page Count: {book.pageCount}</p>
+           <p>Price: {book.listPrice.amount}</p>
             <button onClick={onBack}>Back</button>
         </section>
     )

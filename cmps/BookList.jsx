@@ -7,6 +7,7 @@ export function BookList({ books, onRemoveBook, onSelectBookId }) {
             {books.map(book =>
                 <li key={book.id}>
                     <BookPreview book={book} />
+                    {/*render BookPreview cmp, passing curr book obj as a prop for display*/}
                     <section>
                         <button onClick={() => onRemoveBook(book.id)} >
                             Remove

@@ -1,7 +1,6 @@
 const { useState, useEffect } = React
 
 export function BookFilter({ defaultFilter, onSetFilter }) {
-console.log('filter:', defaultFilter);
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...defaultFilter })
 
