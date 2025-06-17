@@ -20,10 +20,21 @@ export function BookDetails({ bookId, onBack }) {
             })
     }
 
-    function getPageCountDesc(pageCount){
+    function getPageCountDesc(pageCount) {
         if (pageCount > 500) return `Serious Reading (${pageCount})`
-        if (pageCount > 200) return `Descent Reading (${pageCount})` 
+        if (pageCount > 200) return `Descent Reading (${pageCount})`
         if (pageCount < 100) return `Light Reading (${pageCount})`
+    }
+
+    function getBookAgeCategory(publishedDate) {
+        const bookAge = new Date().getFullYear - publishedDate
+        if (bookAge > 10) return `${publishedDate} (Vintage)`
+        else return `${publishedDate} (New)`
+    }
+
+    function getPriceClass(amount) {
+        if (amount > 150) return 'red'
+        if (amount < 20) return 'green'
     }
 
     if (!book) return <div>Loading...</div>
@@ -36,7 +47,7 @@ export function BookDetails({ bookId, onBack }) {
         <section className="book-details container">
             <pre>{JSON.stringify(book, null, 2)}</pre>
             {book.listPrice.isOnSale && <span>On Sale</span>}
-            <BookPreview book={book}/>
+            <BookPreview book={book} />
 
             <p>{book.description}</p>
             <section>
@@ -44,9 +55,9 @@ export function BookDetails({ bookId, onBack }) {
                 <ul>{book.authors.map(author => <li key={author}>{author}</li>)}
                 </ul>
             </section>
-           <p>Published: {book.publishedDate}</p>
-           <p>Page Count: {getPageCountDesc(book.pageCount)}</p>
-           <p>Price: {book.listPrice.amount}</p>
+            <p>Published: {getBookAgeCategory(book.publishedDate)}</p>
+            <p>Page Count: {getPageCountDesc(book.pageCount)}</p>
+            <p>Price: <span className={`book-price ${getPriceClass(book.listPrice.amount)}`}> {book.listPrice.amount}</span></p>
             <button onClick={onBack}>Back</button>
         </section>
     )

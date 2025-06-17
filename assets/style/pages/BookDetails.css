@@ -19,3 +19,13 @@
     display: block;
     margin: auto;
 }
+
+/*new syntax */
+.book-price{
+ &.red {
+    color: red;
+ }
+&.green {
+    color: green;
+}
+}
