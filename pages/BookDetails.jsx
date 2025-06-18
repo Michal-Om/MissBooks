@@ -15,7 +15,11 @@ export function BookDetails({ bookId, onBack }) {
 
     function loadBook() {
         bookService.get(bookId)
-            .then(setBook)
+            .then(book => {
+                // console.log('book:', book);
+                setBook(book)
+            })
+
             .catch(err => {
                 console.log('err:', err)
             })
@@ -51,8 +55,8 @@ export function BookDetails({ bookId, onBack }) {
             {/* <pre>{JSON.stringify(book, null, 2)}</pre> */}
             {book.listPrice.isOnSale && <span>On Sale</span>}
             <BookPreview book={book} />
-            <LongText txt={book.description}/>
-            
+            <LongText txt={book.description} />
+
             {/* <p>{book.description}</p> */}
             <section>
                 <h4>Authors</h4>
@@ -60,6 +64,7 @@ export function BookDetails({ bookId, onBack }) {
                 </ul>
             </section>
             <p>Published: {getBookAgeCategory(book.publishedDate)}</p>
+            <p>Category: {book.categories ? book.categories.join(', ') : 'No Categories'}</p>
             <p>Page Count: {getPageCountDesc(book.pageCount)}</p>
             <p>Price: <span className={`book-price ${getPriceClass(book.listPrice.amount)}`}> {book.listPrice.amount}</span></p>
             <button onClick={onBack}>Back</button>

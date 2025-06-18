@@ -15,12 +15,20 @@ export const bookService = {
 function query(filterBy = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
+            // console.log('books:', books);
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
-                books = books.filter(book => regExp.test(book.title))
+                books = books.filter(book => 
+                    regExp.test(book.title)
+                    || regExp.test(book.description)
+                    || regExp.test(book.subtitle)
+                    // || book.authors.includes(filterBy.txt) // only does exact matching
+                    || book.authors.some(author => regExp.test(author))
+                    || book.categories.some(category => regExp.test(category)) // .some() checks if at least one element in an array passes a test.
+                )
             }
-            if (filterBy.price) {
-                books = books.filter(book => book.listPrice.amount <= filterBy.price)
+            if (filterBy.maxPrice) {
+                books = books.filter(book => book.listPrice.amount <= filterBy.maxPrice)
             }
             return books
         })
@@ -44,7 +52,7 @@ function save(book) {
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: '' }
+    return { txt: '', maxPrice: '' }
 }
 
 function _createBooks() {
