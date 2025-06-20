@@ -1,5 +1,7 @@
 import { BookPreview } from "../cmps/BookPreview.jsx";
 
+const { Link } =ReactRouterDOM
+
 export function BookList({ books, onRemoveBook, onSelectBookId }) {
 
     return (
@@ -12,9 +14,10 @@ export function BookList({ books, onRemoveBook, onSelectBookId }) {
                         <button onClick={() => onRemoveBook(book.id)} >
                             Remove
                         </button>
-                        <button onClick={() => onSelectBookId(book.id)}>
-                            Details
-                        </button>
+                        <Link to={`/book/${book.id}`}>
+                        {/*sets the URL with the book id*/}
+                            <button>Details</button>
+                        </Link>
                     </section>
                 </li>
             )}

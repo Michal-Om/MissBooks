@@ -18,5 +18,11 @@
 
     >a {
         cursor: pointer;
+        transition: scale 0.2s;
+    }
+
+    >a.active {
+        text-decoration: underline;
+        scale: 1.2;
     }
 }

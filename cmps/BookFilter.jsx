@@ -1,8 +1,10 @@
 const { useState, useEffect } = React
 
 export function BookFilter({ defaultFilter, onSetFilter }) {
-
+//defaultFilter, onSetFilter are props — values passed into the BookFilter component by its parent.
     const [filterByToEdit, setFilterByToEdit] = useState({ ...defaultFilter })
+    //...defaultFilter copies all properties from defaultFilter into a new object.
+    //This helps avoid mutating the original defaultFilter.
 
     useEffect(() => {
         onSetFilter(filterByToEdit)
@@ -22,6 +24,8 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 break
         }
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        //...prevFilter copies the current state
+        //[field]: value replaces or adds one property based on the variable field
     }
 
     /* 

@@ -10,6 +10,8 @@ export function BookIndex() {
     const [books, setBooks] = useState(null)
     const [selectedBookId, setSelectedBookId] = useState(null)
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+//this line is defining a React state variable called filterBy 
+// and initializing it with the result of bookService.getDefaultFilter().
 
     useEffect(() => {
         loadBooks()
