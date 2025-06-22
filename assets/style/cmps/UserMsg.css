@@ -10,11 +10,15 @@
 }
 
 .user-msg.success {
-    background-color: var(--clr1);
+    background-color: #d4edda;
+    color: var(--gray3);
+    /* background-color: var(--clr1); */
 }
 
 .user-msg.error {
-    background-color: var(--clr2);
+    background-color: #f8d7da;
+        color: var(--gray3);
+    /* background-color: var(--clr2); */
 }
 
 

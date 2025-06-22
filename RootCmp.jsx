@@ -6,6 +6,7 @@ import { Home } from "./pages/Home.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 import { BookEdit } from "./pages/BookEdit.jsx"
+import { UserMsg } from "./cmps/UserMsg.jsx"
 
 const Router = ReactRouterDOM.HashRouter
 const { Routes, Route } = ReactRouterDOM
@@ -32,7 +33,9 @@ export function RootCmp() {
                         {/*if there's id in the params I will show the details of it*/}
                     </Routes>
                 </main>
+                <UserMsg/>
             </section>
+
         </Router>
     )
 } 
