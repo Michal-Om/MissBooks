@@ -4,6 +4,8 @@ import { AppHeader } from "./cmps/AppHeader.jsx"
 import { About } from "./pages/About.jsx"
 import { Home } from "./pages/Home.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
+import { Team } from "./cmps/Team.jsx"
+import { Vision } from "./cmps/Vision.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 import { BookEdit } from "./pages/BookEdit.jsx"
 import { UserMsg } from "./cmps/UserMsg.jsx"
@@ -23,9 +25,12 @@ export function RootCmp() {
                         {/*checks matching url from top to bottom */}
                         <Route path="/" element={<Home />} />
                         {/*what's the path url and which component or element to render*/}
-                        <Route path="/about" element={<About />} />
+                        <Route path="/about" element={<About />}>
+                            <Route path="/about/team" element={<Team />}/>
+                            <Route path="/about/vision" element={<Vision />}/>
+                        </Route>
                         <Route path="/book" element={<BookIndex />} />
-                        
+
                         <Route path="/book/:bookId" element={<BookDetails />} />
                         {/*When the URL matches /book/:bookId, React Router renders <BookDetails />. */}
                         <Route path="/book/edit" element={<BookEdit />}></Route>
@@ -33,7 +38,7 @@ export function RootCmp() {
                         {/*if there's id in the params I will show the details of it*/}
                     </Routes>
                 </main>
-                <UserMsg/>
+                <UserMsg />
             </section>
 
         </Router>
