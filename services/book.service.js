@@ -9,7 +9,8 @@ export const bookService = {
     get,
     remove,
     save,
-    getDefaultFilter
+    getDefaultFilter,
+    getEmptyBook
 }
 
 function query(filterBy = {}) {
@@ -18,7 +19,7 @@ function query(filterBy = {}) {
             // console.log('books:', books);
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
-                books = books.filter(book => 
+                books = books.filter(book =>
                     regExp.test(book.title)
                     || regExp.test(book.description)
                     || regExp.test(book.subtitle)
@@ -49,6 +50,15 @@ function save(book) {
     } else {
         return storageService.post(BOOK_KEY, book)
     }
+}
+
+function getEmptyBook(title = '', amount = 0 , thumbnail='') {
+    return {
+        title, 
+        listPrice: {amount}, 
+        thumbnail
+    }
+    //info goes into the edit inputs
 }
 
 function getDefaultFilter() {

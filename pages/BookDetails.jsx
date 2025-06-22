@@ -13,7 +13,7 @@ export function BookDetails() {
     useEffect(() => {
         //runs only after the first render
         loadBook()
-    }, [])
+    }, [params.carId])
 
     function loadBook() {
         bookService.get(params.bookId) //gets the bookId from the URL via params and fetches that book’s data from the service

@@ -18,6 +18,10 @@ export function BookList({ books, onRemoveBook, onSelectBookId }) {
                         {/*sets the URL with the book id*/}
                             <button>Details</button>
                         </Link>
+                        <Link to={`/book/edit/${book.id}`}>
+                         <button>Edit</button>
+                        </Link>
+                       
                     </section>
                 </li>
             )}
