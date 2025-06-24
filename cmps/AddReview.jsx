@@ -25,7 +25,6 @@ export function AddReview({onAddReview}){
     return (
          <section>
                 <h3>Add a Review</h3>
-            
                 <form className="review"
                 onSubmit={(ev) => {
                     ev.preventDefault()

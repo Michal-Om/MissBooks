@@ -40,9 +40,9 @@ function query(filterBy = {}) {
 
 function get(bookId) {
     return storageService.get(BOOK_KEY, bookId)
-    .then(book => {
-        return _setNextPrevBookId(book)
-    })
+        .then(book => {
+            return _setNextPrevBookId(book)
+        })
 }
 
 function remove(bookId) {
@@ -58,10 +58,10 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', amount = 0 , thumbnail='') {
+function getEmptyBook(title = '', amount = 0, thumbnail = '') {
     return {
-        title, 
-        listPrice: {amount}, 
+        title,
+        listPrice: { amount },
         thumbnail
     }
     //info goes into the edit inputs
@@ -104,7 +104,7 @@ function _createBooks() {
 
 }
 
-function _setNextPrevBookId(book){
+function _setNextPrevBookId(book) {
     return query().then((books) => {
         const bookIdx = books.findIndex((currBook) => currBook.id === book.id)
         const nextBook = books[bookIdx + 1] ? books[bookIdx + 1] : books[0]
@@ -115,26 +115,34 @@ function _setNextPrevBookId(book){
     })
 }
 
-function getEmptyReview(){
+function getEmptyReview() {
     return {
+        id: makeId(),
         fullname: '',
         rating: '',
         readAt: ''
     }
 }
 
-function addReview(bookId, review){
-return get(bookId).then(book => {
-     if (!book.reviews) {
+function addReview(bookId, review) {
+    return get(bookId).then(book => {
+        if (!book.reviews) {
             book.reviews = [review]
         } else {
             book.reviews.push(review)
         }
         return save(book)
-})
+    })
+        .catch(err => console.log('Failed to add review:', err))
 }
 
-function removeReview(bookId, reviewIdx){
-
+function removeReview(bookId, reviewId) {
+    return get(bookId).then(book => {
+        const reviews = book.reviews
+        const updatedReviews = reviews.filter((review) => reviewId !== review.id)
+        book.reviews = updatedReviews
+        return save(book)
+    })
+        .catch(err => console.log('Failed to remove review:', err))
 }
 

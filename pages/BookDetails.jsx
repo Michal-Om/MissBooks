@@ -26,7 +26,7 @@ export function BookDetails() {
             })
 
             .catch(err => {
-                console.log('Cannot get car:', err)
+                console.log('Cannot get book:', err)
             })
     }
 
@@ -57,8 +57,11 @@ export function BookDetails() {
         bookService.addReview(bookId, review)
             .then((updatedBook) => {
                 setBook(updatedBook)
+                //setBook((prev...) => ({...book, updatedBook}))??
                 showSuccessMsg('Review was added successfully')
             })
+            .catch(err => console.log('Failed to add review:', err)
+            )
     }
 
     function onRemoveReview(bookId, reviewIdx) {
@@ -96,12 +99,12 @@ export function BookDetails() {
             </p>
             <section>
                 <h3>Reviews</h3>
-                {book.reviews ? <ul>
-                    {book.reviews.map((review, idx) => <li key={idx}>
+                {book.reviews && book.reviews.length > 0 ? <ul>
+                    {book.reviews.map((review, idx) => <li key={review.id}>
                         <p>{review.fullname}</p>
                         <p>{review.rating}</p>
                         <p>{review.readAt}</p>
-                        <button onClick={() =>onRemoveReview(book.id, idx)}>Delete</button>
+                        <button onClick={() =>onRemoveReview(book.id, review.id)}>Delete</button>
                     </li>)}
                 </ul> : 'No reviews yet'}
             </section>
