@@ -32,7 +32,6 @@ export function RootCmp() {
                             <Route path="/about/vision" element={<Vision />} />
                         </Route>
                         <Route path="/book" element={<BookIndex />} />
-
                         <Route path="/book/:bookId" element={<BookDetails />} />
                         {/*When the URL matches /book/:bookId, React Router renders <BookDetails />. */}
                         <Route path="/book/edit" element={<BookEdit />}></Route>

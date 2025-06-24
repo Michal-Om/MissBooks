@@ -10,7 +10,10 @@ export const bookService = {
     remove,
     save,
     getDefaultFilter,
-    getEmptyBook
+    getEmptyBook,
+    getEmptyReview,
+    addReview,
+    removeReview,
 }
 
 function query(filterBy = {}) {
@@ -112,6 +115,26 @@ function _setNextPrevBookId(book){
     })
 }
 
+function getEmptyReview(){
+    return {
+        fullname: '',
+        rating: '',
+        readAt: ''
+    }
+}
 
+function addReview(bookId, review){
+return get(bookId).then(book => {
+     if (!book.reviews) {
+            book.reviews = [review]
+        } else {
+            book.reviews.push(review)
+        }
+        return save(book)
+})
+}
 
+function removeReview(bookId, reviewIdx){
+
+}
 
