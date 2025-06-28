@@ -3,6 +3,7 @@ import { BookPreview } from "../cmps/BookPreview.jsx";
 const { Link } =ReactRouterDOM
 
 export function BookList({ books, onRemoveBook, onSelectBookId }) {
+if(!books.length) return <div>No Books To Show...</div>
 
     return (
         <ul className="book-list container">

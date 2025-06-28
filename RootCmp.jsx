@@ -37,7 +37,7 @@ export function RootCmp() {
                         {/*When the URL matches /book/:bookId, React Router renders <BookDetails />. */}
                         <Route path="/book/edit" element={<BookEdit />}></Route>
                         <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
-                        {/*if there's id in the params I will show the details of it*/}
+                        {/*if there's id in the params it will show the details of it*/}
                         <Route path="/book/add/google" element={<GBookAdd/>}/>
                         <Route path="*" element={<NotFound />}/>
 

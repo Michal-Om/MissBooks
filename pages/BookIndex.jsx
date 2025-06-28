@@ -1,21 +1,24 @@
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
-import { BookDetails } from "./BookDetails.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { getTruthyValues } from "../services/util.service.js"
 
 const { useState, useEffect } = React
-const { Link } = ReactRouterDOM
+const { Link, useSearchParams } = ReactRouterDOM
 
 export function BookIndex() {
 
     const [books, setBooks] = useState(null)
-    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
-//this line is defining a React state variable called filterBy 
-// and initializing it with the result of bookService.getDefaultFilter().
+    //this line is defining a React state variable called filterBy 
+    // and initializing it with the result of bookService.getDefaultFilter().
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(bookService.getFilterFromSearchParams(searchParams))
+    //if it exists (or typed) in url you can see it in the input and filtered results (one way data binding)
 
     useEffect(() => {
         loadBooks()
+        setSearchParams(getTruthyValues(filterBy)) //two-way data binding. whatever is typed in input filer is copied to the url
     }, [filterBy])
 
     function loadBooks() {
@@ -45,23 +48,23 @@ export function BookIndex() {
 
     return (
         <section className="book-index">
-                    <BookFilter
-                        defaultFilter={filterBy}
-                        onSetFilter={onSetFilter}
-                    />
-                    {/* <section className="container">
+            <BookFilter
+                defaultFilter={filterBy}
+                onSetFilter={onSetFilter}
+            />
+            {/* <section className="container">
                         <Link to="/book/edit">Add</Link>
                     </section> */}
-                    
-                    <section>
-                        <Link to="add/google">
-                        <button>Add Book</button>
-                        </Link>
-                    </section>
-                    <BookList
-                        books={books}
-                        onRemoveBook={onRemoveBook}
-                    />
+
+            <section>
+                <Link to="add/google">
+                    <button>Add Book</button>
+                </Link>
+            </section>
+            <BookList
+                books={books}
+                onRemoveBook={onRemoveBook}
+            />
         </section>
     )
 

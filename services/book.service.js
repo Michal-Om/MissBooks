@@ -17,6 +17,7 @@ export const bookService = {
     removeReview,
     mapGoogleBookToAppBook,
     getBooksFromGoogle,
+    getFilterFromSearchParams,
 }
 
 function query(filterBy = {}) {
@@ -119,6 +120,16 @@ function _createBooks() {
         console.log('books', books)
     }
 
+}
+
+function getFilterFromSearchParams(searchParams) {
+    const txt = searchParams.get('txt') || ''
+    const maxPrice = searchParams.get('maxPrice') || ''
+  
+    return {
+        txt,
+        maxPrice
+    }
 }
 
 function _setNextPrevBookId(book) {
