@@ -1,5 +1,6 @@
 import { loadFromStorage, makeId, makeLorem, saveToStorage } from './util.service.js'
 import { storageService } from './async-storage.service.js'
+import { gBooks } from '../data/gbooks.js'
 
 const BOOK_KEY = 'bookDB'
 _createBooks()
@@ -14,6 +15,8 @@ export const bookService = {
     getEmptyReview,
     addReview,
     removeReview,
+    mapGoogleBookToAppBook,
+    getBooksFromGoogle,
 }
 
 function query(filterBy = {}) {
@@ -58,13 +61,27 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', amount = 0, thumbnail = '') {
-    return {
-        title,
-        listPrice: { amount },
-        thumbnail
-    }
+function getEmptyBook() {
     //info goes into the edit inputs
+     return {
+        title: "",
+        subtitle: utilService.makeLorem(4),
+        authors: [
+            authorsList[utilService.getRandomIntInclusive(0, authorsList.length - 1)]
+        ],
+        publishedDate: "",
+        description: "",
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+        thumbnail: `BooksImages/${1}.jpg`,
+        language: "en",
+        listPrice: {
+            amount: utilService.getRandomIntInclusive(80, 500),
+            currencyCode: "EUR",
+            isOnSale: Math.random() > 0.7
+        }
+    }
+
 }
 
 function getDefaultFilter() {
@@ -146,3 +163,33 @@ function removeReview(bookId, reviewId) {
         .catch(err => console.log('Failed to remove review:', err))
 }
 
+function mapGoogleBookToAppBook(googleBook){
+const info = googleBook.volumeInfo
+
+    return {
+        id: googleBook.id || utilService.makeId(),
+        title: info.title || 'Untitled',
+        subtitle: info.subtitle || utilService.makeLorem(4),
+        authors: info.authors,
+        publishedDate: info.publishedDate || '',
+        description: info.description || utilService.makeLorem(20),
+        pageCount: info.pageCount || utilService.getRandomIntInclusive(20, 600),
+        categories: info.categories,
+        thumbnail: (info.imageLinks && info.imageLinks.thumbnail) ? info.imageLinks.thumbnail : `BooksImages/${utilService.getRandomIntInclusive(1, 20)}.jpg`,
+        language: info.language || 'en',
+        listPrice: {
+            amount: utilService.getRandomIntInclusive(80, 500),
+            currencyCode: "EUR",
+            isOnSale: Math.random() > 0.7
+        }
+    }
+}
+
+function getBooksFromGoogle(searchTerm){
+    return Promise.resolve(gBooks.items) // used for mock data during testing. 
+    // temporarily replaces fetch and .then()
+    //This way the rest of the app, which is expecting a promise, continues to work the same.
+    return fetch(`https://www.googleapis.com/books/v1/volumes?printType=books&q=${searchTerm}`)
+    .then(res => res.json())
+    .then(res=> res.items)
+}

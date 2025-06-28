@@ -8,6 +8,7 @@ import { Team } from "./cmps/Team.jsx"
 import { Vision } from "./cmps/Vision.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 import { BookEdit } from "./pages/BookEdit.jsx"
+import { GBookAdd } from "./pages/GBookAdd.jsx"
 import { UserMsg } from "./cmps/UserMsg.jsx"
 import { NotFound } from "./cmps/NotFound.jsx"
 
@@ -37,7 +38,7 @@ export function RootCmp() {
                         <Route path="/book/edit" element={<BookEdit />}></Route>
                         <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
                         {/*if there's id in the params I will show the details of it*/}
-                        
+                        <Route path="/book/add/google" element={<GBookAdd/>}/>
                         <Route path="*" element={<NotFound />}/>
 
                     </Routes>
